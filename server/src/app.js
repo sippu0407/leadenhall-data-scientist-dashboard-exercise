@@ -6,6 +6,8 @@ const helmet = require('helmet');
 
 const { PORT } = require('./config/serverConfig');
 const connect = require('./config/dbConfig');
+const appRouter= require('./routes/index');
+
 const app = express();
 
 
@@ -15,9 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev')); 
 app.use(helmet()); 
 
+app.use('/api',appRouter);
 
 const serverSetup = async () => {
- 
+  
   await connect();
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
